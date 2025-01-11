@@ -15,7 +15,7 @@ const TabNavigation = ({ navigation }) => {
         <TouchableOpacity
           key={index}
           style={styles.tabButton}
-          onPress={() => navigation.navigate(tab.screen)} // Navigasi ke screen yang sesuai
+          onPress={() => navigation.navigate(tab.screen)} 
         >
           <Image source={tab.icon} style={styles.tabIcon} />
           <Text style={styles.tabText}>{tab.label}</Text>
