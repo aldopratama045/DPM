@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; 
+import Icon from 'react-native-vector-icons/Ionicons'; // Pastikan ini diinstal
 
 const CalendarScreen = ({ navigation }) => {
   const calendarImages = [
@@ -11,11 +11,11 @@ const CalendarScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#333" />
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" size={26} color="#333" />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Kalender Akademik 2024/2025</Text>
+        <Text style={styles.header}>Kalender Akademik</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {calendarImages.map((image, index) => (
@@ -31,32 +31,20 @@ const CalendarScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f9f9f9',
+    paddingHorizontal: 16, // Jarak horizontal sesuai permintaan
+    paddingTop: 50, // Jarak dari atas layar
   },
-  header: {
-    height: 60,
-    maxHeight: 80, 
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: '#f5f5f5',
-    paddingHorizontal: 10,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    marginBottom: 1, // Jarak antara header dan konten
   },
-  backButton: {
-    marginRight: 10,
-    padding: 5, 
-  },
-  headerText: {
-    fontSize: 16, 
-    fontWeight: 'bold',
-    color: '#333',
-    flex: 1, 
-    textAlign: 'center',
+  header: {
+    fontSize: 24, // Ukuran teks header
+    fontWeight: 'bold', // Teks tebal
+    color: '#333', // Warna teks
+    marginLeft: 12, // Jarak teks dari ikon
   },
   scrollContainer: {
     paddingVertical: 16,

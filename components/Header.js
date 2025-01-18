@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: 7,
     backgroundColor: '#006400',
   },
   logo: {
     width: 120,
-    height: 40,
+    height: 60,
   },
   notificationIcon: {
     padding: 10,

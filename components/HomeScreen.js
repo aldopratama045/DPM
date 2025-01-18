@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import Header from './Header';
-import SearchBar from './SearchBar';
 import CategoryNavigation from './CategoryNavigation';
 import NewsCard from './NewsCard';
 import TabNavigation from './TabNavigation';
@@ -164,7 +163,7 @@ Pada sesi malam kebudayaan, delegasi mahasiswa UIR mempersembahkan drama berjudu
           {({ navigation }) => (
             <View style={styles.container}>
               <Header />
-              <SearchBar />
+              
               <CategoryNavigation
                 selectedCategory={selectedCategory}
                 onCategoryPress={setSelectedCategory}

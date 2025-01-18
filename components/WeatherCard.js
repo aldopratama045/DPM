@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 
 const WeatherCard = ({ weather }) => {
   return (
@@ -14,29 +15,55 @@ const WeatherCard = ({ weather }) => {
 };
 
 const App = () => {
-  const weatherData = {
-    name: "Cuaca",
-    main: { temp: 28 },
-    weather: [{ description: "Sangat Cerah", icon: "01d" }],
+  const [searchQuery, setSearchQuery] = useState('');
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const apiKey = 'e571c522b4903ec3fbdc23b05abdb84c'; // Ganti dengan API key Anda
+
+  const fetchWeatherData = async () => {
+    if (!searchQuery) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${apiKey}&units=metric`;
+      const response = await axios.get(url);
+      setWeatherData(response.data);
+    } catch (err) {
+      setError('Kota atau negara tidak ditemukan. Coba lagi.');
+      setWeatherData(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>UIRA NEWS</Text>
-        <Text style={styles.subHeader}>News Pendidikan Cuaca</Text>
+        <Text style={styles.header}>Weather Search</Text>
+        <Text style={styles.subHeader}>Cari cuaca berdasarkan kota atau negara</Text>
       </View>
-      <WeatherCard weather={weatherData} />
-      <Text style={styles.todayTitle}>Cuaca Hari Ini</Text>
-      <ScrollView horizontal style={styles.todayContainer}>
-        {Array.from({ length: 5 }, (_, index) => (
-          <View key={index} style={styles.todayCard}>
-            <Text style={styles.time}>{`${13 + index}:00`}</Text>
-            <Icon name="cloud" size={30} color="#4fc3f7" style={styles.iconSmall} />
-            <Text style={styles.tempSmall}>{25 + index}°</Text>
-          </View>
-        ))}
-      </ScrollView>
+
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Masukkan kota atau negara"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <TouchableOpacity style={styles.searchButton} onPress={fetchWeatherData}>
+          <Text style={styles.searchButtonText}>Cari</Text>
+        </TouchableOpacity>
+      </View>
+
+      {loading && <ActivityIndicator size="large" color="#0277bd" style={styles.loader} />}
+
+      {error && <Text style={styles.errorText}>{error}</Text>}
+
+      {weatherData && <WeatherCard weather={weatherData} />}
     </View>
   );
 };
@@ -64,6 +91,41 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#555',
     fontStyle: 'italic',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    fontSize: 16,
+  },
+  searchButton: {
+    marginLeft: 10,
+    backgroundColor: '#0277bd',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  searchButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  loader: {
+    marginTop: 20,
+  },
+  errorText: {
+    color: '#d32f2f',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
   },
   card: {
     backgroundColor: '#fff',
@@ -94,42 +156,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginBottom: 10,
-  },
-  todayTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#0277bd',
-    marginBottom: 10,
-  },
-  todayContainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  todayCard: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    marginRight: 15,
-    alignItems: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 3,
-  },
-  time: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#555',
-  },
-  tempSmall: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#ff8f00',
-    marginTop: 5,
-  },
-  iconSmall: {
-    marginTop: 10,
   },
 });
 
