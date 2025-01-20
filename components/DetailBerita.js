@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
+    paddingTop: 50, // Menambahkan padding atas agar header turun sedikit
     backgroundColor: '#fff',
     elevation: 3, // Memberikan bayangan untuk header
   },

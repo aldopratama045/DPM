@@ -10,10 +10,13 @@ import DetailBerita from './DetailBerita';
 import WeatherCard from './WeatherCard'; // Komponen baru untuk menampilkan cuaca
 import axios from 'axios';
 import CalendarScreen from './CalendarScreen';
+import LoginScreen from './LoginScreen';
+import RegisterScreen from './RegisterScreen';
 import FavoriteScreen from './FavoriteScreen';
 import ProfileScreen from './ProfileScreen';
 
 const Stack = createStackNavigator();
+
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState('News');
@@ -189,6 +192,8 @@ Pada sesi malam kebudayaan, delegasi mahasiswa UIR mempersembahkan drama berjudu
             </View>
           )}
         </Stack.Screen>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Calendar" component={CalendarScreen} />
         <Stack.Screen name="Favorite" component={FavoriteScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
@@ -199,6 +204,26 @@ Pada sesi malam kebudayaan, delegasi mahasiswa UIR mempersembahkan drama berjudu
 };
 
 const styles = StyleSheet.create({
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  tabButton: {
+    alignItems: 'center',
+  },
+  tabIcon: {
+    width: 24,
+    height: 24,
+  },
+  tabText: {
+    fontSize: 12,
+    color: '#555',
+    marginTop: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
